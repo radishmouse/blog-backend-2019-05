@@ -27,6 +27,14 @@ select * from users where id=$1
 
     return user;
   }
+
+  static async deleteById(id) {
+    const result = await db.result(`
+delete from users where id=$1
+    `, [id]);    
+
+    return id;
+  }
   
   async save() {
     const {id} = await db.one(`

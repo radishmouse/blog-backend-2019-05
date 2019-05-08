@@ -69,12 +69,37 @@ describe(`Users`, () => {
       
     });
   });
-  describe(`#getAll`, async () => {
-    const users = await User.getAll();
-    expect(users).to.be.an('array');
-    users.forEach(u => {
-      expect(u).to.be.an.instanceOf(User);
+  describe(`#getAll`, () => {
+    it(`should get all users in database`, async () => {      
+      const users = await User.getAll();
+      expect(users).to.be.an('array');
+      users.forEach(u => {
+        expect(u).to.be.an.instanceOf(User);
+      });
     });
   });
-  describe.skip(`#deleteById`, () => {});  
+  describe(`#deleteById`, () => {
+    it('should delete a single user', async () => {      
+      const uname = 'radishmouse';
+      const phash = '12345';
+      const fname = 'chris';
+      const lname = 'aquino';
+      const u = new User(
+        uname, phash, fname, lname
+      );    
+      const id = await u.save();
+      
+      const originalUsers = await User.getAll();
+      const originalLength = originalUsers.length;    
+
+      const result = await User.deleteById(id);
+      expect(result).to.equal(id);
+
+      const resultingUsers = await User.getAll();
+      const resultingLength = resultingUsers.length;    
+
+      expect(resultingLength).to.equal(originalLength - 1);
+    });
+    
+  });  
 });
