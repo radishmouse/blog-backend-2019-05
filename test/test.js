@@ -69,4 +69,12 @@ describe(`Users`, () => {
       
     });
   });
+  describe(`#getAll`, async () => {
+    const users = await User.getAll();
+    expect(users).to.be.an('array');
+    users.forEach(u => {
+      expect(u).to.be.an.instanceOf(User);
+    });
+  });
+  describe.skip(`#deleteById`, () => {});  
 });

@@ -13,6 +13,11 @@ module.exports = class User {
     Object.keys(obj).forEach(k => u[k] = obj[k]);
     return u;
   }
+
+  static async getAll() {
+    const results = await db.any(`select * from users`);
+    return results.map(User.from);
+  }
   
   static async getById(id) {
     const result = await db.one(`
