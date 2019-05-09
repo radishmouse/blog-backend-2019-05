@@ -10,7 +10,7 @@ module.exports = class Post {
 
   static from(obj) {
     const p = new Post();
-    Object.keys(p).forEach(k => p[k] = obj[k]);
+    Object.keys(obj).forEach(k => p[k] = obj[k]);
     return p;
   }
 
@@ -19,11 +19,27 @@ module.exports = class Post {
     return results.map(Post.from);
   }
 
+  static async getAllAsObject() {
+    const results = await db.any(`select * from posts`);
+    return results.map(Post.from).reduce((acc, p) => {
+      const simpleP = {
+        title: p.title,
+        content: p.content
+      };
+      return {
+        ...acc,
+        [p.id]: simpleP
+      };
+    }, {});
+  }
+  
+
   static async getById(id) {
     const result = await db.one(`
 select * from posts where id=$1
     `, [id]);
     const post = Post.from(result);
+    console.log(post);
     return post;
   }
 

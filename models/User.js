@@ -19,6 +19,16 @@ module.exports = class User {
     const results = await db.any(`select * from users`);
     return results.map(User.from);
   }
+
+  static async getAllAsObject() {
+    const results = await db.any(`select * from users`);
+    return results.map(User.from).reduce((acc, u) => {
+      return {
+        ...acc,
+        [u.id]: u
+      };
+    }, {});
+  }
   
   static async getById(id) {
     const result = await db.one(`

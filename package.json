@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "db:create": "export $(cat .env | xargs) && createdb -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME",
     "db:init": "export $(cat .env | xargs) && psql -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME -f schema.sql",
     "db:seed": "export $(cat .env | xargs) && psql -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME -f seed.sql",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0"
   }
 }
