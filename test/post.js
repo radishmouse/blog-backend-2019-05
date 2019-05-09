@@ -60,6 +60,15 @@ describe(`Model: Post`, () => {
       
     });
   });
+  describe(`#getAll`, () => {
+    it(`should get all posts in database`, async () => {
+      const posts = await Post.getAll();
+      expect(posts).to.be.an('array');
+      posts.forEach(p => {
+        expect(p).to.be.an.instanceOf(Post);
+      });
+    });
+  });
   describe(`#getByAuthorId`, () => {
     
   });

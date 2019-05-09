@@ -14,6 +14,11 @@ module.exports = class Post {
     return p;
   }
 
+  static async getAll() {
+    const results = await db.any(`select * from posts`);
+    return results.map(Post.from);
+  }
+
   static async getById(id) {
     const result = await db.one(`
 select * from posts where id=$1
