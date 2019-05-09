@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const User = require('../models/User');
 
-describe.skip(`Model: User`, () => {
+describe(`Model: User`, () => {
   describe(`#constructor`, () => {
     it(`should accept a username, hash, firstname, lastname`, () => {
       const uname = 'radishmouse';
@@ -99,7 +99,6 @@ describe.skip(`Model: User`, () => {
       const resultingLength = resultingUsers.length;    
 
       expect(resultingLength).to.equal(originalLength - 1);
-    });
-    
+    });    
   });  
 });

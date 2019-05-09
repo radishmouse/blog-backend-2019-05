@@ -87,4 +87,28 @@ describe(`Model: Post`, () => {
       });
     });
   });
+  describe(`#deleteById`, () => {
+    it('should delete a single post', async () => {
+      const title = 'post title';
+      const content = 'lorem ipsum';
+      const authorid = 1;
+      const p = new Post(
+        title, content, authorid
+      );
+      const id = await p.save();
+
+      const originalPosts = await Post.getAll();
+      const originalLength = originalPosts.length;    
+
+      const result = await Post.deleteById(id);
+      expect(result).to.equal(id);
+
+      const resultingPosts = await Post.getAll();
+      const resultingLength = resultingPosts.length;    
+
+      expect(resultingLength).to.equal(originalLength - 1);
+    });
+    
+  });  
+  
 });

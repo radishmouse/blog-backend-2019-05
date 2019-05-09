@@ -26,9 +26,17 @@ select * from posts where id=$1
     const post = Post.from(result);
     return post;
   }
+
   static async getByAuthorId(id) {
     const results = await db.any(`select * from posts where authorid=$1`, [id]);
     return results.map(Post.from);
+  }
+
+  static async deleteById(idToDelete) {
+    const {id} = await db.one(`
+delete from posts where id=$1 returning id
+    `, [idToDelete]);    
+    return id;
   }
 
   async save() {
