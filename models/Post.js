@@ -26,6 +26,10 @@ select * from posts where id=$1
     const post = Post.from(result);
     return post;
   }
+  static async getByAuthorId(id) {
+    const results = await db.any(`select * from posts where authorid=$1`, [id]);
+    return results.map(Post.from);
+  }
 
   async save() {
     const {id} = await db.one(`

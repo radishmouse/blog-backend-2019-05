@@ -70,6 +70,21 @@ describe(`Model: Post`, () => {
     });
   });
   describe(`#getByAuthorId`, () => {
-    
+    it(`should get posts for an author id`, async () => {      
+      const title = 'post title';
+      const content = 'lorem ipsum';
+      const authorid = 1;
+      const p = new Post(
+        title, content, authorid
+      );
+      // there will be at least one
+      const id = await p.save();
+
+      const posts = await Post.getByAuthorId(authorid);
+      expect(posts).to.be.an('array');
+      posts.forEach(p => {
+        expect(p).to.be.an.instanceOf(Post);
+      });
+    });
   });
 });
