@@ -8,6 +8,7 @@ module.exports = class User {
     this.firstname = firstname;
     this.lastname = lastname;
   }
+
   static from(obj) {
     const u = new User();
     Object.keys(obj).forEach(k => u[k] = obj[k]);
@@ -24,15 +25,19 @@ module.exports = class User {
 select * from users where id=$1
     `, [id]);
     const user = User.from(result);
-
     return user;
+    // too clever
+    // return User.from(
+          // await db.one(`
+// select * from users where id=$1
+    // `, [id])      
+    // );
   }
 
-  static async deleteById(id) {
-    const result = await db.result(`
-delete from users where id=$1
-    `, [id]);    
-
+  static async deleteById(idToDelete) {
+    const {id} = await db.one(`
+delete from users where id=$1 returning id
+    `, [idToDelete]);    
     return id;
   }
   
